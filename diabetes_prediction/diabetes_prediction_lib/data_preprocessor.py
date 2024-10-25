@@ -1,12 +1,10 @@
-# %%
 import pandas as pd
 
 class NaNRemover:
-    def __init__(self, columns_with_nan):
+    def __init__(self,columns_with_nan = ["age", "gender", "ethnicity"]):
+        self.columns_with_nan = columns_with_nan
     # Constructor that initializes the NaNRemover class with a list of columns we want to treat
     # Takes as argumant a list of columns from which we want to remove rows with NaN values.
-        self.columns_with_nan = columns_with_nan
-    
     def remove_nan(self, df):
     # Removes rows with NaN values in specific columns
     # Arguments: DataFrame to clean
@@ -14,7 +12,7 @@ class NaNRemover:
         return df.dropna(subset=self.columns_with_nan)
 
 class NaNFiller:
-    def __init__(self, columns_to_fill):
+    def __init__(self, columns_to_fill = ['height', 'weight']):
     # Constructor that initializes the NaNFiller class with columns to fill NaN values with the mean
     # Takes as argument a list of columns from which we want to fill NaN values with the mean
         self.columns_to_fill = columns_to_fill

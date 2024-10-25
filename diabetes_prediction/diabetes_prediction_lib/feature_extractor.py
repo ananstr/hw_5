@@ -16,7 +16,7 @@ class GenderBinaryTransformer(FeatureTransformer):
 
 class EthnicityOneHotEncoder(FeatureTransformer):
     # Performs one hot encoding on the ethnicity column
-    def transform(self, df):
-        return pd.get_dummies(df, columns=['ethnicity'], drop_first=True)
+    def transform(self, df, column='ethnicity'):
+        return pd.get_dummies(df, column, drop_first=True)
 
 
