@@ -10,13 +10,19 @@ class FeatureTransformer(ABC):
 
 class GenderBinaryTransformer(FeatureTransformer):
 # Converts gender into binary (M/F)
-    def transform(self, df):
-        df['gender'] = df['gender'].map({'M': 1, 'F': 0})
+    def transform(self, df, column_name='gender'):
+        '''
+        Converts gender into binary values (M:1/F:0).
+        '''
+        self.column_name = column_name
+        df[self.column_name] = df[self.column_name].map({'M': 1, 'F': 0})
         return df
 
 class EthnicityOneHotEncoder(FeatureTransformer):
-    # Performs one hot encoding on the ethnicity column
-    def transform(self, df, column='ethnicity'):
-        return pd.get_dummies(df, column, drop_first=True)
+    def transform(self, df, column_name='ethnicity'):
+        '''
+        Performs one hot encoding on the 'ethnicity' column
+        '''
+        return pd.get_dummies(df, column_name, drop_first=True)
 
 
