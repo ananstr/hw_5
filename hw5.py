@@ -3,27 +3,37 @@
 # 1.1) Create a Patient class with attributes name and symptoms
         
 class Patient:
-    def __init__(self, name, symptoms):
+    def __init__(self, name:str, symptoms:list[str]):
         self.name = name
         self.symptoms = symptoms
-        self.tests = {}
-        self.covid_probability = 0.05
-
-# 1.2) Method to add test results
-    def add_test(self, test_name, test_result):
-        self.tests[test_name] = test_result
-        if test_name == "covid" and test_result:
-            self.covid_probability = 0.99
-        elif test_name == "covid" and not test_result:
-            self.covid_probability = 0.01
-        else:
-            for symptom in ['fever', 'cough', 'anosmia']:
-                if symptom in self.symptoms:
-                    self.covid_probability += 0.1
-                    
-# 1.3) Method to check for the probability of having Covid
+        self.test = []
+        self.covid_prob = 0
+        
+    def add_test(self, test_name:str, test_results:bool):
+        self.test_tuple = (test_name, test_results)
+        self.test.append(self.test_tuple)  
+        
     def has_covid(self):
-        return self.covid_probability
+        self.relevant_symptoms = ['fever', 'cough', 'anosmia']
+        for i in self.test:
+            if i[0] == 'covid' and i[1] == True:
+                self.covid_prob = 0.99
+                return self.covid_prob
+            
+            if i[0] == 'covid' and i[1] == False:
+                self.covid_prob = 0.01
+                return self.covid_prob
+            
+            if any(symptom in self.symptoms for symptom in self.relevant_symptoms):
+                self.covid_prob = 0.05 
+                self.covid_symptoms_counter = 0
+                
+                for symptom in self.symptoms:
+                    if symptom in self.relevant_symptoms:
+                        self.covid_symptoms_counter += 1
+                self.covid_prob += 0.1 * self.covid_symptoms_counter
+                
+        return self.covid_prob 
 
 # Exercise 2. Card and Deck Class
 
